@@ -20,7 +20,7 @@ class Funcionario extends Pessoa
     }
 
     public function devolverLivroEmprestado() {
-        if ($this->quantidadeMaximaDeLivros == QUANTIDADE_LIVROS_FUNCIONARIO) {
+        if ($this->quantidadeMaximaDeLivros >= QUANTIDADE_LIVROS_FUNCIONARIO) {
             return false;
         }
 
