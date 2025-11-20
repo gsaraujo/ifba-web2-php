@@ -8,13 +8,13 @@ O objetivo dessa atividade é praticar os conceitos de POO em PHP para preparar 
 
 Você deverá construir as seguintes classes, com os respectivos atributos e métodos:
 1. Pessoa
-   2. matricula 
-   3. nome 
-   4. quantidadeMaximaDeLivros 
-   5. Construtor que recebe nome, matricula e inicializa a quantidadeMaximaDeLivros com 0;
-   6. Getters e Setters
+   - matricula 
+   - nome 
+   - quantidadeMaximaDeLivros 
+   - Construtor que recebe nome, matricula e inicializa a quantidadeMaximaDeLivros com 0;
+   - Getters e Setters
 7. Usuario
-   8. Subclasse de Pessoa
+   8. qSubclasse de Pessoa
    9. Construtor que recebe nome, matricula, invoca o construtor da superclasse (parent::__construct(nome, matricula)) e inicializa a quantidadeMaximaDeLivros com 2;
    10. Método pegarLivroEmprestado() que deve verificar se o usuário ainda possui limite para pegar livros (quantidadeMaximaDeLivros). Caso possua, precisamos diminuir o valor do atributo em 1, indicando que o usuário está com um empréstimo ativo.
    11. Método devolverLivroEmprestado() que deve aumentar em 1 o valor de quantidadeMaximaDeLivros.
