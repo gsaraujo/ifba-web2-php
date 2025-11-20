@@ -1,0 +1,4 @@
+<?php
+
+    const QUANTIDADE_LIVROS_USUARIO = 2;
+    const QUANTIDADE_LIVROS_FUNCIONARIO = 3;
