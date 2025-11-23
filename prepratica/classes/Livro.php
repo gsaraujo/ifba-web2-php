@@ -7,6 +7,13 @@ class Livro
     private $autor;
     private $quantidadeDeCopias;
 
+    public function __construct($codigo, $titulo, $autor) {
+        $this->codigo = $codigo;
+        $this->titulo = $titulo;
+        $this->autor = $autor;
+        $this->quantidadeDeCopias = QUANTIDADE_COPIAS_PADRAO;
+    }
+
 
 
     /**

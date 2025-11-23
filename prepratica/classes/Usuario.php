@@ -1,5 +1,6 @@
 <?php
 
+include_once "Pessoa.php";
 class Usuario extends Pessoa
 {
 
