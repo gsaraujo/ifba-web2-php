@@ -1,5 +1,6 @@
 <?php
 
+include_once "Pessoa.php";
 class Funcionario extends Pessoa
 {
     private $setor;

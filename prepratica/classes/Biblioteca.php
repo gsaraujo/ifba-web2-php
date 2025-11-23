@@ -1,5 +1,9 @@
 <?php
 
+include_once "Livro.php";
+include_once "Funcionario.php";
+include_once "Usuario.php";
+
 class Biblioteca
 {
     private $acervo = array();
@@ -7,27 +11,83 @@ class Biblioteca
     private $emprestimos = array();
 
     public function addPessoa($pessoa) {
-        $this->clientes[] = $pessoa->getMatricula();
+        $this->clientes[] = $pessoa;
     }
 
     public function addLivro($livro) {
-        $this->acervo[] = $livro->getCodigo();
+        $this->acervo[] = $livro;
     }
 
-    public function addEmprestimo($pessoa, $livro) {
-
-        if (isset($this->emprestimos[$pessoa->getMatricula()])) {
-            if (isset($this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()])) {
-                $this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()]++;
-            } else {
-                $this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()] = 1;
+    public function pesquisaLivro($livro) {
+        foreach ($this->acervo as $livroAcervo) {
+            if ($livro->getCodigo() == $livroAcervo->getCodigo()) {
+                return $livroAcervo;
             }
-        } else {
-            $this->emprestimos[$pessoa->getMatricula()] = [$livro->getCodigo() => 1];
+        }
+        return null;
+    }
+
+    public function pesquisarPessoa($pessoa) {
+        foreach ($this->clientes as $clienteBiblioteca) {
+            if ($clienteBiblioteca->getMatricula() == $pessoa->getMatricula()) {
+                return $clienteBiblioteca;
+            }
         }
     }
 
-    public function removerEmprestimo($pessoa, $livro) {
+    public function addEmprestimo($pessoaParaPesquisa, $livroParaPesquisa) {
+
+        $pessoa = $this->pesquisarPessoa($pessoaParaPesquisa);
+        $livro = $this->pesquisaLivro($livroParaPesquisa);
+
+        if(($pessoa != null) && ($livro != null)) {
+
+            if ($pessoa->pegarLivroEmprestado()) {
+                if ($livro->realizarEmprestimo()) {
+                    if (isset($this->emprestimos[$pessoa->getMatricula()])) {
+                        if (isset($this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()])) {
+                            $this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()]++;
+                        } else {
+                            $this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()] = 1;
+                        }
+                    } else {
+                        $this->emprestimos[$pessoa->getMatricula()] = [$livro->getCodigo() => 1];
+                    }
+                } else {
+                    $pessoa->devolverLivroEmprestado();
+                }
+            }
+            echo "Empréstimo não realizado<br>";
+        } else {
+            echo "Pessoa ou livro não identificado<br>";
+        }
+
+    }
+
+    public function removerEmprestimo($pessoaParaPesquisa, $livroParaPesquisa) {
+
+        $pessoa = $this->pesquisarPessoa($pessoaParaPesquisa);
+        $livro = $this->pesquisaLivro($livroParaPesquisa);
+
+        if(($pessoa != null) && ($livro != null)) {
+
+
+            if (isset($this->emprestimos[$pessoa->getMatricula()])) {
+
+                if (isset($this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()])) {
+                    if ($this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()] > 0) {
+                        $pessoa->devolverLivroEmprestado();
+                        $livro->realizarDevolucao();
+                        $this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()]--;
+                        if ($this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()] == 0) {
+                            unset($this->emprestimos[$pessoa->getMatricula()][$livro->getCodigo()]);
+                        }
+                    }
+                }
+            }
+        } else {
+            echo "Pessoa ou livro não identificado<br>";
+        }
 
     }
 
