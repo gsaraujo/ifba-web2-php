@@ -26,9 +26,6 @@
         $biblioteca->addEmprestimo($funcionario,$livroDois);
     }
 
-    echo "<pre>";
-    var_dump($biblioteca);
-
     for ($i = 1; $i <= 10; $i++) {
         $biblioteca->removerEmprestimo($funcionario,$livro);
 
@@ -37,3 +34,16 @@
     for ($i = 1; $i <= 10; $i++) {
 
     }
+
+    echo "<pre>";
+    var_dump($biblioteca->emprestimos);
+
+    echo "</pre>";
+
+    echo "<pre>";
+    var_dump($biblioteca->acervo);
+    echo "</pre>";
+
+    echo "<pre>";
+    var_dump($biblioteca->clientes);
+    echo "</pre>";

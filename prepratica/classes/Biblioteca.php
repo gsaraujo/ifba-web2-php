@@ -6,9 +6,9 @@ include_once "Usuario.php";
 
 class Biblioteca
 {
-    private $acervo = array();
-    private $clientes = array();
-    private $emprestimos = array();
+    public $acervo = array();
+    public $clientes = array();
+    public $emprestimos = array();
 
     public function addPessoa($pessoa) {
         $this->clientes[] = $pessoa;
@@ -33,6 +33,7 @@ class Biblioteca
                 return $clienteBiblioteca;
             }
         }
+        return null;
     }
 
     public function addEmprestimo($pessoaParaPesquisa, $livroParaPesquisa) {
@@ -55,10 +56,14 @@ class Biblioteca
                     }
                 } else {
                     $pessoa->devolverLivroEmprestado();
+                    echo "Empréstimo não realizado<br>";
                 }
+            } else {
+                echo "Empréstimo não realizado<br>";
             }
-            echo "Empréstimo não realizado<br>";
+
         } else {
+            echo "Empréstimo não realizado<br>";
             echo "Pessoa ou livro não identificado<br>";
         }
 
@@ -70,7 +75,6 @@ class Biblioteca
         $livro = $this->pesquisaLivro($livroParaPesquisa);
 
         if(($pessoa != null) && ($livro != null)) {
-
 
             if (isset($this->emprestimos[$pessoa->getMatricula()])) {
 
